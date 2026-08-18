@@ -145,7 +145,7 @@ def scan_ports():
     return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
 
 @app.route('/api/network-hunting', methods=['GET'])
-def network_hunting():>
+def network_hunting():
     return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!<br><br>n3-Step Hunting Activated successfully.<br>🔗 Connected Source: Asman Satellite (Starlink Grid)"})
 
 @app.route('/api/time-lock', methods=['GET'])
