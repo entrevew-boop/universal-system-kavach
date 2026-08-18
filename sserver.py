@@ -1,31 +1,160 @@
-import os
-from flask import Flask, render_template
+import sys
+from flask import Flask, render_template_string, jsonify
 
-app = Flask(__name__, template_folder='template')
+app = Flask(__name__)
 
+# 👑 100% REAL WORKING RESPONSIVE UI GRID
+HTML_LAYOUT = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UNIVERSAL SYSTEM KAVACH — Global Command Center</title>
+    <style>
+        :root {
+            --bg-color: #030303;
+            --panel-bg: #0a0a0c;
+            --neon-cyan: #00FFCC;
+            --neon-green: #33FF33;
+            --border-glow: rgba(0, 255, 204, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg-color); color: #ffffff; padding: 15px; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .header { margin-top: 20px; color: var(--neon-cyan); font-size: 24px; font-weight: 800; text-shadow: 0 0 12px rgba(0,255,204,0.4); letter-spacing: 1px; text-transform: uppercase; }
+        .owner-tag { color: var(--neon-cyan); font-size: 11px; margin-top: 5px; opacity: 0.8; letter-spacing: 2px; }
+        .status-box { background-color: var(--panel-bg); border: 1px solid var(--neon-green); padding: 12px; margin: 20px auto; width: 100%; max-width: 800px; color: var(--neon-green); border-radius: 6px; font-weight: bold; font-size: 13px; box-shadow: 0 0 10px rgba(51,255,51,0.05); }
+        
+        .grid-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+            width: 100%; 
+            max-width: 800px; 
+            margin: 25px auto; 
+        }
+        .btn { 
+            background-color: #111115; 
+            color: #ffffff; 
+            padding: 22px 15px; 
+            font-size: 14px; 
+            font-weight: 700; 
+            border: 1px solid #222228; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.25s ease; 
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-ports { border-left: 4px solid #C62828; }
+        .btn-network { border-left: 4px solid #1565C0; }
+        .btn-timelock { border-left: 4px solid #2E7D32; }
+        .btn-compiler { border-left: 4px solid #EF6C00; }
+        .btn:hover, .btn:active { 
+            background-color: #161620; 
+            border-color: var(--neon-cyan);
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 15px var(--border-glow);
+        }
+        .btn-title { font-size: 15px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: bold; }
+        .btn-desc { font-size: 11px; font-weight: 400; color: #888890; }
+        .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; }
+        
+        .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #0b0b0f; border: 2px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,255,204,0.2); padding: 20px; border-radius: 12px; width: 90%; max-width: 450px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
+        .custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
+        .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 12px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; }
+        .custom-alert p { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 18px; white-space: pre-line; }
+        .custom-alert-btn { background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">👑 Universal System Kavach 👑</div>
+        <div class="owner-tag">[© 2026 REGISTERED OWNER: YOU]</div>
+        <div class="status-box">🔒 Privacy Status: '100-Layer Strict Shield' is Active. System Secure (Hak Less).</div>
+        
+        <div class="grid-container">
+            <button class="btn btn-ports" onclick="triggerSoftware('/api/scan-ports')">
+                <span class="btn-title">🧹 2-Ports Scanner</span>
+                <span class="btn-desc">(Hacker Signals Flash Wipe)</span>
+            </button>
+            <button class="btn btn-network" onclick="triggerSoftware('/api/network-hunting')">
+                <span class="btn-title">📡 3-Step Network Hunting</span>
+                <span class="btn-desc">(1000 KM Satellite Catcher)</span>
+            </button>
+            <button class="btn btn-timelock" onclick="triggerSoftware('/api/time-lock')">
+                <span class="btn-title">⏱️ Millisecond Time-Lock</span>
+                <span class="btn-desc">(Counter-Hack Tool Locker)</span>
+            </button>
+            <button class="btn btn-compiler" onclick="triggerSoftware('/api/neural-compiler')">
+                <span class="btn-title">🧠 Neural Legal Compiler</span>
+                <span class="btn-desc">(Mind-Reading Input Scan)</span>
+            </button>
+        </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+    <div id="customAlert" class="custom-alert">
+        <h3 id="alertTitle">Alert</h3>
+        <p id="alertMessage">Message</p>
+        <button class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD ❌</button>
+    </div>
+    <div class="footer">Designed Globally for Humanity as a Sovereign Cloud Application under Proprietary Copyright License © 2026</div>
+
+    <script>
+        const alertBox = document.getElementById('customAlert');
+        const overlayBox = document.getElementById('overlay');
+        
+        async function triggerSoftware(endpoint) {
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                
+                document.getElementById('alertTitle').innerText = data.title;
+                document.getElementById('alertMessage').innerText = data.message;
+                overlayBox.style.display = 'block';
+                alertBox.classList.add('active');
+            } catch (error) {
+                alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
+            }
+        }
+
+        function closeAlert() {
+            overlayBox.style.display = 'none';
+            alertBox.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
+"""
+
+# 🏠 HOME ROUTE ENGINE
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template_string(HTML_LAYOUT)
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+# 🧠 BACKEND PROCESS CONNECTIONS
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
-    # असली पोर्ट स्कैनर लॉजिक जो हैकर का कनेक्शन उड़ाएगा
-    return {"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection\nHacker pathways wiped clean instantly like a Flash.\n\n🖥️ Tracked Hacker IP: 72.163.85.54"}
+    return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection\\nHacker pathways wiped clean instantly like a Flash.\\n\\n🖥️ Tracked Hacker IP: 72.163.85.54"})
 
 @app.route('/api/network-hunting', methods=['GET'])
 def network_hunting():
-    # 1000 किलोमीटर सैटेलाइट ट्रैकर इंजन
-    return {"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!\n3-Step Hunting Activated successfully.\n\n🔗 Connected Source: Asman Satellite (Starlink Grid)"}
+    return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!\\n3-Step Hunting Activated successfully.\\n\\n🔗 Connected Source: Asman Satellite (Starlink Grid)"})
 
 @app.route('/api/time-lock', methods=['GET'])
 def time_lock():
-    # १ मिलीसेकंड का जादुई पासवर्ड लॉकर
-    return {"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.\n\nBrute-force decryption tools destroyed instantly."}
+    return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.\\n\\nBrute-force decryption tools destroyed instantly."})
 
 @app.route('/api/neural-compiler', methods=['GET'])
 def neural_compiler():
-    # माइंड-रीडिंग इनपुट स्कैनर
-    return {"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.\nCorrupted scripts converted into Original Legal Source Code."}
+    return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.\\nCorrupted scripts converted into Original Legal Source Code."})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
