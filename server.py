@@ -142,19 +142,19 @@ def home():
 # 🧠 BACKEND PROCESS CONNECTIONS
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
-    return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection\\nHacker pathways wiped clean instantly like a Flash.\\n\\n🖥️ Tracked Hacker IP: 72.163.85.54"})
+    return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
 
 @app.route('/api/network-hunting', methods=['GET'])
-def network_hunting():
-    return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!\\n3-Step Hunting Activated successfully.\\n\\n🔗 Connected Source: Asman Satellite (Starlink Grid)"})
+def network_hunting():>
+    return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!<br><br>n3-Step Hunting Activated successfully.<br>🔗 Connected Source: Asman Satellite (Starlink Grid)"})
 
 @app.route('/api/time-lock', methods=['GET'])
 def time_lock():
-    return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.\\n\\nBrute-force decryption tools destroyed instantly."})
+    return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.<br><br>Brute-force decryption tools destroyed instantly."})
 
 @app.route('/api/neural-compiler', methods=['GET'])
 def neural_compiler():
-    return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.\\nCorrupted scripts converted into Original Legal Source Code."})
+    return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>nCorrupted scripts converted into Original Legal Source Code."})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
