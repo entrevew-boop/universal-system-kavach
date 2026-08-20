@@ -1,3 +1,9 @@
+import sys
+from flask import Flask, render_template_string, jsonify
+
+app = Flask(__name__)
+
+HTML_LAYOUT = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,12 +66,10 @@
         .btn-desc { font-size: 11px; font-weight: 400; color: #888890; }
         .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; }
         
-        /* 🚨 NEW VIP DYNAMIC SCANNING SCREEN */
         .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #050508; border: 2px solid var(--neon-cyan); box-shadow: 0 0 35px rgba(0,255,204,0.3); padding: 25px; border-radius: 12px; width: 92%; max-width: 465px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
         .custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
         .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* DYNAMIC RADAR LOADING BAR */
         .scan-container { margin: 15px 0; display: block; }
         .scan-text { font-size: 12px; color: var(--neon-cyan); font-weight: bold; margin-bottom: 6px; display: flex; justify-content: space-between; }
         .progress-bg { background-color: #111116; border: 1px solid #22222b; width: 100%; height: 12px; border-radius: 10px; overflow: hidden; position: relative; }
@@ -103,11 +107,9 @@
     </div>
     <div id="overlay" class="overlay"></div>
     
-    <!-- DYNAMIC SMART PANEL -->
     <div id="customAlert" class="custom-alert">
         <h3 id="alertTitle">SYSTEM INITIALIZING...</h3>
         
-        <!-- LIVE ANIMATION GRID -->
         <div id="scanContainer" class="scan-container">
             <div class="scan-text"><span id="scanLabel">SCANNING CHANNELS...</span> <span id="scanPercent">0%</span></div>
             <div class="progress-bg"><div id="progressBar" class="progress-bar"></div></div>
@@ -132,7 +134,6 @@
         
         async function triggerSoftware(endpoint) {
             try {
-                // RESET THE VIP PANEL INTERACTIVE SYSTEM
                 pTitle.innerText = "⚡ SECURITY INJECTOR ACTIVATED";
                 pLabel.innerText = "RUNNING DEEP SATELLITE SCAN...";
                 pBar.style.width = "0%";
@@ -144,22 +145,20 @@
                 overlayBox.style.display = 'block';
                 alertBox.classList.add('active');
 
-                // LIVE DYNAMIC GRAPHIC PROGRESS TIMER (0 TO 100%)
                 let width = 0;
                 let interval = setInterval(async () => {
                     if (width >= 100) {
                         clearInterval(interval);
                         
-                        // FETCH REAL DATA AFTER ANIMATION ENDS
                         const response = await fetch(endpoint);
                         const data = await response.json();
                         
                         pTitle.innerText = data.title;
                         pMsg.innerHTML = data.message;
                         
-                        pContainer.style.display = "none"; // Hide loading bar
-                        pMsg.style.display = "block";       // Show hacker data
-                        pBtn.style.display = "block";       // Show close button
+                        pContainer.style.display = "none";
+                        pMsg.style.display = "block";
+                        pBtn.style.display = "block";
                     } else {
                         width += 2; 
                         pBar.style.width = width + '%';
@@ -167,7 +166,7 @@
                         if(width == 40) pLabel.innerText = "BYPASSING COUNTER PROXY...";
                         if(width == 70) pLabel.innerText = "LOCKING HACKER TERMINAL...";
                     }
-                }, 30); // Super fast hacker scanning speed
+                }, 30);
 
             } catch (error) {
                 alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
@@ -175,3 +174,17 @@
         }
 
         function closeAlert() {
+            overlayBox.style.display = 'none';
+            alertBox.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
+"""
+
+@app.route('/')
+def home():
+    return render_template_string(HTML_LAYOUT)
+
+@app.route('/api/scan-ports', methods=['GET'])
+def scan_ports():
