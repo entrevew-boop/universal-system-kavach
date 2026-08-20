@@ -169,17 +169,16 @@ HTML_LAYOUT = """
                 }, 30);
 
             } catch (error) {
-                alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
-            }
-        }
+                alert("⚠️ Connection Break! Re-linking Universal Satellite Grid.
 
-        function closeAlert() {
-            overlayBox.style.display = 'none';
+
             alertBox.classList.remove('active');
         }
     </script>
 </body>
-</html>
+</html>  function closeAlert() {
+            overlayBox.style.display = 'none';return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel ProtectionHacker pathways wiped clean instantly like a Flash.🖥️ Tracked Hacker IP: 72.163.85.54"})@app.route('/api/network-hunting', methods=['GET'])def network_hunting():return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!🔗 Connected Source: Asman Satellite (Starlink Grid)"})@app.route('/api/time-lock', methods=['GET'])def time_lock():return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.Brute-force decryption tools destroyed instantly."})@app.route('/api/neural-compiler', methods=['GET'])def neural_compiler():return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.Corrupted scripts converted into Original Legal Source Code."})if name == 'main':app.run(host='0.0.0.0', port=10000)
+---
 """
 
 @app.route('/')
@@ -188,3 +187,8 @@ def home():
 
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
+return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel ProtectionHacker pathways wiped clean instantly like a Flash.🖥️ Tracked Hacker IP: 72.163.85.54"})@app.route('/api/network-hunting', methods=['GET'])def network_hunting():return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!🔗 Connected Source: Asman Satellite (Starlink Grid)"})@app.route('/api/time-lock', methods=['GET'])def time_lock():return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.Brute-force decryption tools destroyed instantly."})@app.route('/api/neural-compiler', methods=['GET'])def neural_compiler():return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.Corrupted scripts converted into Original Legal Source Code."})if name == 'main':app.run(host='0.0.0.0', port=10000)
+--return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel ProtectionHacker pathways wiped clean instantly like a Flash.🖥️ Tracked Hacker IP: 72.163.85.54"})@app.route('/api/network-hunting', methods=['GET'])def network_hunting():return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!🔗 Connected Source: Asman Satellite (Starlink Grid)"})@app.route('/api/time-lock', methods=['GET'])def time_lock():return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.Brute-force decryption tools destroyed instantly."})@app.route('/api/neural-compiler', methods=['GET'])def neural_compiler():return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.Corrupted scripts converted into Original Legal Source Code."})if name == 'main':app.run(host='0.0.0.0', port=10000)
+---
+
+
