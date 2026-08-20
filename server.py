@@ -157,4 +157,4 @@ def neural_compiler():
     return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>nCorrupted scripts converted into Original Legal Source Code."})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+  app.run(host='0.0.0.0', port=10000)  
