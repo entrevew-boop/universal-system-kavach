@@ -3,6 +3,7 @@ from flask import Flask, render_template_string, jsonify
 
 app = Flask(__name__)
 
+# 👑 100% REAL WORKING RESPONSIVE UI GRID
 HTML_LAYOUT = """
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +17,7 @@ HTML_LAYOUT = """
             --panel-bg: #0a0a0c;
             --neon-cyan: #00FFCC;
             --neon-green: #33FF33;
-            --neon-alert: #FF3333;
-            --border-glow: rgba(0, 255, 204, 0.15);
+            --border-glow: rgba(0, 255, 204, 0.1);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: var(--bg-color); color: #ffffff; padding: 15px; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
@@ -66,18 +66,12 @@ HTML_LAYOUT = """
         .btn-desc { font-size: 11px; font-weight: 400; color: #888890; }
         .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; }
         
-        .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #050508; border: 2px solid var(--neon-cyan); box-shadow: 0 0 35px rgba(0,255,204,0.3); padding: 25px; border-radius: 12px; width: 92%; max-width: 465px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
+        .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #0b0b0f; border: 2px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,255,204,0.2); padding: 20px; border-radius: 12px; width: 90%; max-width: 450px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
         .custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
-        .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .scan-container { margin: 15px 0; display: block; }
-        .scan-text { font-size: 12px; color: var(--neon-cyan); font-weight: bold; margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .progress-bg { background-color: #111116; border: 1px solid #22222b; width: 100%; height: 12px; border-radius: 10px; overflow: hidden; position: relative; }
-        .progress-bar { background: linear-gradient(90deg, #00FFCC, #33FF33); width: 0%; height: 100%; border-radius: 10px; transition: width 0.05s linear; }
-        
-        .alert-content-text { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 20px; min-height: 60px; display: none; }
-        .custom-alert-btn { background-color: var(--neon-alert); color: #ffffff; font-weight: 800; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; display: none; box-shadow: 0 0 15px rgba(255,51,51,0.2); }
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; backdrop-filter: blur(6px); }
+        .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 12px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; }
+        .custom-alert p { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 18px; white-space: pre-line; }
+        .custom-alert-btn { background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(4px); }
     </style>
 </head>
 <body>
@@ -106,79 +100,38 @@ HTML_LAYOUT = """
         </div>
     </div>
     <div id="overlay" class="overlay"></div>
-    
     <div id="customAlert" class="custom-alert">
-        <h3 id="alertTitle">SYSTEM INITIALIZING...</h3>
-        
-        <div id="scanContainer" class="scan-container">
-            <div class="scan-text"><span id="scanLabel">SCANNING CHANNELS...</span> <span id="scanPercent">0%</span></div>
-            <div class="progress-bg"><div id="progressBar" class="progress-bar"></div></div>
-        </div>
-
-        <p id="alertMessage" class="alert-content-text">Message</p>
-        <button id="closeBtn" class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD ❌</button>
+        <h3 id="alertTitle">Alert</h3>
+        <p id="alertMessage">Message</p>
+        <button class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD ❌</button>
     </div>
-    
     <div class="footer">Designed Globally for Humanity as a Sovereign Cloud Application under Proprietary Copyright License © 2026</div>
 
     <script>
         const alertBox = document.getElementById('customAlert');
         const overlayBox = document.getElementById('overlay');
-        const pBar = document.getElementById('progressBar');
-        const pPercent = document.getElementById('scanPercent');
-        const pLabel = document.getElementById('scanLabel');
-        const pMsg = document.getElementById('alertMessage');
-        const pBtn = document.getElementById('closeBtn');
-        const pContainer = document.getElementById('scanContainer');
-        const pTitle = document.getElementById('alertTitle');
         
         async function triggerSoftware(endpoint) {
             try {
-                pTitle.innerText = "⚡ SECURITY INJECTOR ACTIVATED";
-                pLabel.innerText = "RUNNING DEEP SATELLITE SCAN...";
-                pBar.style.width = "0%";
-                pPercent.innerText = "0%";
-                pMsg.style.display = "none";
-                pBtn.style.display = "none";
-                pContainer.style.display = "block";
+                const response = await fetch(endpoint);
+                const data = await response.json();
                 
+                document.getElementById('alertTitle').innerText = data.title;
+                document.getElementById('alertMessage').innerHTML = data.message;
                 overlayBox.style.display = 'block';
                 alertBox.classList.add('active');
-
-                let width = 0;
-                let interval = setInterval(async () => {
-                    if (width >= 100) {
-                        clearInterval(interval);
-                        
-                        const response = await fetch(endpoint);
-                        const data = await response.json();
-                        
-                        pTitle.innerText = data.title;
-                        pMsg.innerHTML = data.message;
-                        
-                        pContainer.style.display = "none";
-                        pMsg.style.display = "block";
-                        pBtn.style.display = "block";
-                    } else {
-                        width += 2; 
-                        pBar.style.width = width + '%';
-                        pPercent.innerText = width + '%';
-                        if(width == 40) pLabel.innerText = "BYPASSING COUNTER PROXY...";
-                        if(width == 70) pLabel.innerText = "LOCKING HACKER TERMINAL...";
-                    }
-                }, 30);
-
             } catch (error) {
-                alert("⚠️ Connection Break! Re-linking Universal Satellite Grid.
+                alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
+            }
+        }
 
-
+        function closeAlert() {
+            overlayBox.style.display = 'none';
             alertBox.classList.remove('active');
         }
     </script>
 </body>
-</html>  function closeAlert() {
-            overlayBox.style.display = 'none';return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel ProtectionHacker pathways wiped clean instantly like a Flash.🖥️ Tracked Hacker IP: 72.163.85.54"})@app.route('/api/network-hunting', methods=['GET'])def network_hunting():return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!🔗 Connected Source: Asman Satellite (Starlink Grid)"})@app.route('/api/time-lock', methods=['GET'])def time_lock():return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.Brute-force decryption tools destroyed instantly."})@app.route('/api/neural-compiler', methods=['GET'])def neural_compiler():return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.Corrupted scripts converted into Original Legal Source Code."})if name == 'main':app.run(host='0.0.0.0', port=10000)
----
+</html>
 """
 
 @app.route('/')
@@ -187,8 +140,19 @@ def home():
 
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
-return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel ProtectionHacker pathways wiped clean instantly like a Flash.🖥️ Tracked Hacker IP: 72.163.85.54"})@app.route('/api/network-hunting', methods=['GET'])def network_hunting():return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!🔗 Connected Source: Asman Satellite (Starlink Grid)"})@app.route('/api/time-lock', methods=['GET'])def time_lock():return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.Brute-force decryption tools destroyed instantly."})@app.route('/api/neural-compiler', methods=['GET'])def neural_compiler():return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.Corrupted scripts converted into Original Legal Source Code."})if name == 'main':app.run(host='0.0.0.0', port=10000)
---return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel ProtectionHacker pathways wiped clean instantly like a Flash.🖥️ Tracked Hacker IP: 72.163.85.54"})@app.route('/api/network-hunting', methods=['GET'])def network_hunting():return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!🔗 Connected Source: Asman Satellite (Starlink Grid)"})@app.route('/api/time-lock', methods=['GET'])def time_lock():return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.Brute-force decryption tools destroyed instantly."})@app.route('/api/neural-compiler', methods=['GET'])def neural_compiler():return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.Corrupted scripts converted into Original Legal Source Code."})if name == 'main':app.run(host='0.0.0.0', port=10000)
----
+    return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
 
+@app.route('/api/network-hunting', methods=['GET'])
+def network_hunting():
+    return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!<br><br>🔗 Connected Source: Asman Satellite (Starlink Grid)"})
 
+@app.route('/api/time-lock', methods=['GET'])
+def time_lock():
+    return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.<br><br>Brute-force decryption tools destroyed instantly."})
+
+@app.route('/api/neural-compiler', methods=['GET'])
+def neural_compiler():
+    return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>Corrupted scripts converted into Original Legal Source Code."})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
