@@ -72,8 +72,94 @@ HTML_LAYOUT = """
         .custom-alert p { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 18px; white-space: pre-line; }
         .custom-alert-btn { background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(4px); }
-    </style>
+          /* 🔐 साइनअप और लॉगिन बक्से का वीआईपी डिज़्‍ाइन (बिना कुछ मिटाए नीचे जोड़ें) */
+        .auth-wrapper { display: flex; width: 100%; min-height: 80vh; align-items: center; justify-content: center; }
+        .auth-container { width: 100%; max-width: 480px; text-align: center; background-color: var(--panel-bg); border: 1px solid #1a1a24; padding: 35px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0,255,204,0.05); }
+        h2.auth-heading { color: #ffffff; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #1a1a24; padding-bottom: 10px; }
+        p.info-text { color: #888890; font-size: 13px; line-height: 1.6; margin-bottom: 25px; text-align: justify; }
+        .form-group { margin-bottom: 18px; text-align: left; }
+        label { display: block; color: var(--neon-cyan); font-size: 11px; font-weight: bold; margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+        input { width: 100%; background-color: #111116; border: 1px solid #22222b; padding: 13px 12px; color: #ffffff; border-radius: 6px; font-size: 14px; transition: all 0.3s; }
+        input:focus { border-color: var(--neon-cyan); outline: none; box-shadow: 0 0 10px rgba(0,255,204,0.1); }
+        .submit-btn { width: 100%; background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 13px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; margin-top: 10px; }
+        .submit-btn:hover { background-color: #00ccaa; box-shadow: 0 0 15px rgba(0,255,204,0.25); }
+        .switch-link { display: block; margin-top: 18px; color: #888890; font-size: 12px; text-decoration: none; }
+        .switch-link span { color: var(--neon-cyan); font-weight: bold; }
+        .error-msg { background-color: rgba(255,51,51,0.08); border: 1px solid var(--neon-alert); color: var(--neon-alert); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
+        .success-msg { background-color: rgba(51,255,51,0.08); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
+ 
+     </style>
 </head>
+    <!-- 📄 स्क्रीन 1: सॉफ़्टवेयर का स्वागत पन्ना (Welcome Screen) -->
+    {% if segment == 'welcome' %}
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <div class="header">👑 SYSTEM KAVACH 👑</div>
+            <div class="owner-tag">GLOBAL SECURE DASHBOARD</div>
+            <h2 class="auth-heading">HACK-LESS PROTECTION ON</h2>
+            <p class="info-text">Welcome to the world's most powerful decentralized cloud protection hub. This network shields transmission gates dynamically. To interact with the system buttons, you must first register your Unique User ID below.</p>
+            <button class="submit-btn" onclick="window.location.href='/signup'">PROCEED TO SIGN UP 🔒</button>
+            <a href="/login" class="switch-link">Already a registered owner? <span>Log In here</span></a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 🛡️ स्क्रीन 2: नया अकाउंट बनाने का गेट (Sign Up Box) -->
+    {% if segment == 'signup' %}
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <div class="header">🛡️ REGISTER GATE 🛡️</div>
+            <div class="owner-tag">IDENTITY VAULT MAKER</div>
+            <h2 class="auth-heading">CREATE USER ACCOUNT</h2>
+            
+            {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
+            {% if success %}<div class="success-msg">{{ success }}</div>{% endif %}
+            
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <label>CREATE USER ID / USERNAME</label>
+                    <input type="text" name="username" placeholder="Letters or numbers only..." required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>CREATE SECURITY PASSWORD</label>
+                    <input type="password" name="password" placeholder="At least 4 keys..." required>
+                </div>
+                <button type="submit" class="submit-btn">ACTIVATE USER GRID 📡</button>
+            </form>
+            <a href="/login" class="switch-link">Have an active access key? <span>Log In</span></a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 🔐 स्क्रीन 3: लॉगिन करने का ताला (Log In Box) -->
+    {% if segment == 'login' %}
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <div class="header">🔐 LOCK SCREEN 🔐</div>
+            <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
+            <h2 class="auth-heading">ENTER KEY DETAILS</h2>
+            
+            {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
+            
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label>ENTER USER ID</label>
+                    <input type="text" name="username" placeholder="Your account ID..." required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>ENTER SECRET PASSWORD</label>
+                    <input type="password" name="password" placeholder="Your password..." required>
+                </div>
+                <button type="submit" class="submit-btn">UNLOCK SHIELD INTERFACE 👑</button>
+            </form>
+            <a href="/signup" class="switch-link">Need a new security pass? <span>Sign Up</span></a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 👑 स्क्रीन 4: इसके नीचे आपका पुराना कड़क नियॉन बटन्स वाला बक्सा बिल्कुल सुरक्षित रहेगा -->
+    {% if segment == 'dashboard' %}
+
 <body>
     <div class="container">
         <div class="header">👑 Universal System Kavach 👑</div>
