@@ -57,12 +57,12 @@ HTML_LAYOUT = """
         .btn-network { border-left: 4px solid #1565C0; }
         .btn-timelock { border-left: 4px solid #2E7D32; }
         .btn-compiler { border-left: 4px solid #EF6C00; }
-        .btn:hover, .btn:active { 
+        .btn:hover, .btn:active 
             background-color: #161620; 
             border-color: var(--neon-cyan);
             transform: translateY(-2px); 
             box-shadow: 0 5px 15px var(--border-glow);
-        }
+        
         .btn-title { font-size: 15px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: bold; }
         .btn-desc { font-size: 11px; font-weight: 400; color: #888890; }
         .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; }
@@ -116,10 +116,8 @@ HTML_LAYOUT = """
                 document.getElementById('alertMessage').innerHTML = data.message;
                 overlayBox.style.display = 'block';
                 alertBox.classList.add('active');
-            } catch (error) {
-            }
+            } catch (error) 
                 alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
-        
         function closeAlert() {
             overlayBox.style.display = 'none';
             alertBox.classList.remove('active');
@@ -128,8 +126,6 @@ HTML_LAYOUT = """
 </body>
 </html>
 """
-
-
 @app.route('/', methods=['GET', 'POST', 'HEAD'])
 def welcome():
     if request.method == 'HEAD': return '', 200
@@ -201,6 +197,7 @@ def login():
     """
     return render_template_string(LOGIN_SCREEN)
 @app.route('/logout')
+            
 def logout():
     session.pop('username', None)
     return redirect(url_for('welcome'))
@@ -230,6 +227,9 @@ def neural_compiler():
 if __name__ == '__main__':
    app.run(host='0.0.0.0', port=10000)
 
+
+
+        
 
 
 
