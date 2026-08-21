@@ -103,7 +103,7 @@ HTML_LAYOUT = """
         </div>
     </div>
     {% endif %}
-
+@app.rout('/signup',methods=['GET','POST', 'HEAD'])
     <!-- 🛡️ स्क्रीन 2:(Sign Up Box) -->
     {% if segment == 'signup' %}
     <div class="auth-wrapper">
@@ -130,7 +130,7 @@ HTML_LAYOUT = """
         </div>
     </div>
     {% endif %}
-
+@app,route('/login',methods=['GET','POST','HEAD'])
     <!-- 🔐 स्क्रीन 3:(Log In Box) -->
     {% if segment == 'login' %}
     <div class="auth-wrapper">
@@ -159,7 +159,7 @@ HTML_LAYOUT = """
 
     <!-- 👑 स्क्रीन 4 -->
     {% if segment == 'dashboard' %}
-
+@app.route('/dashboard', methods=['GET', 'HEAD'])
 <body>
     <div class="container">
         <div class="header">👑 Universal System Kavach 👑</div>
@@ -220,11 +220,10 @@ HTML_LAYOUT = """
 </html>
 """
 
-@app.route('/')
+@app.route('/',methods=[`GET`, `POST`, `HEAD`])
 def home():
-    return render_template_string(HTML
-                                   _layout,page='welcome')
-
+    return render_template_string(HTML_layout,page='welcom')
+                                  
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
     return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
