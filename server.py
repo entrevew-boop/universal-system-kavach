@@ -119,7 +119,7 @@ HTML_LAYOUT = """
             } catch (error) {
             }
                 alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
-        }
+        
         function closeAlert() {
             overlayBox.style.display = 'none';
             alertBox.classList.remove('active');
@@ -128,13 +128,13 @@ HTML_LAYOUT = """
 </body>
 </html>
 """
-# ==================== 🔐 USER SIGNUP & LOGIN ROUTE ENGINE ====================
+
 
 @app.route('/', methods=['GET', 'POST', 'HEAD'])
 def welcome():
     if request.method == 'HEAD': return '', 200
     if 'username' in session: return redirect(url_for('home'))
-    # 📄 स्वागत पन्ना (Welcome Landing Page Screen)
+   (Welcome Landing Page Screen)
     WELCOME_SCREEN = """
     <div style="background:#0a0a0c; border:1px solid #1a1a24; padding:35px 25px; border-radius:12px; max-width:450px; margin:80px auto; text-align:center; font-family:sans-serif; box-shadow:0 0 20px rgba(0,255,204,0.1);">
         <h1 style="color:#00FFCC; margin-bottom:5px; text-transform:uppercase;">👑 SYSTEM KAVACH 👑</h1>
@@ -171,7 +171,7 @@ def signup():
         <a href="/login" style="display:block; margin-top:15px; color:#888890; font-size:12px; text-decoration:none;">Have an active key? <span style="color:#00FFCC; font-weight:bold;">Log In</span></a>
     </div>
     """
-    return render_template_string(SIGNUP_SCREEN)
+    return render_template_string(SIGNUp_SCREEN)
 @app.route('/login', methods=['GET', 'POST', 'HEAD'])
 def login():
     if request.method == 'HEAD': return '', 200
@@ -204,13 +204,13 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('welcome'))
-# 🏠 MAIN SECURE DASHBOARD ROUTE (पुराना मेन गेट जिसे हमने सुरक्षित लॉक कर दिया है)
+# 🏠 MAIN SECURE DASHBOARD ROUTE
 @app.route('/home', methods=['GET', 'POST', 'HEAD'])
 def home():
     if request.method == 'HEAD': return '', 200
     if 'username' not in session: return redirect(url_for('login'))
     return render_template_string(HTML_LAYOUT)
-# 🧹 API CONNECTIONS (पुराने बटन्स के रास्ते)
+# 🧹 API CONNECTIONS
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
     if 'username' not in session: return jsonify({"status": "ERROR", "message": "Denied"})
