@@ -3,8 +3,8 @@ from flask import Flask, render_template_string, jsonify
 app = Flask(__name__)
 # 👑 YOUR PERFECT REAL WORKING RESPONSIVE UI GRID
 HTML_LAYOUT = """
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<HTML lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -23,7 +23,6 @@ HTML_LAYOUT = """
         .header { margin-top: 20px; color: var(--neon-cyan); font-size: 24px; font-weight: 800; text-shadow: 0 0 12px rgba(0,255,204,0.4); letter-spacing: 1px; text-transform: uppercase; }
         .owner-tag { color: var(--neon-cyan); font-size: 11px; margin-top: 5px; opacity: 0.8; letter-spacing: 2px; }
         .status-box { background-color: var(--panel-bg); border: 1px solid var(--neon-green); padding: 12px; margin: 20px auto; width: 100%; max-width: 800px; color: var(--neon-green); border-radius: 6px; font-weight: bold; font-size: 13px; box-shadow: 0 0 10px rgba(51,255,51,0.05); }
-        
         .grid-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -85,7 +84,7 @@ HTML_LAYOUT = """
         .success-msg { background-color: rgba(51,255,51,0.08); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
      </style>
 </head>
-    <!-- 📄 स्क्रीन 1:ा (Welcome Screen) -->
+     (Welcome Screen) -->
     {% if segment == 'welcome' %}
     <div class="auth-wrapper">
         <div class="auth-container">
@@ -99,7 +98,7 @@ HTML_LAYOUT = """
     </div>
     {% endif %}
 @app.rout('/signup',methods=['GET','POST', 'HEAD'])
-    <!-- 🛡️ स्क्रीन 2:(Sign Up Box) -->
+    <!-:(Sign Up Box) -->
     {% if segment == 'signup' %}
     <div class="auth-wrapper">
         <div class="auth-container">
@@ -120,14 +119,13 @@ HTML_LAYOUT = """
                 <button type="submit" class="submit-btn">ACTIVATE USER GRID 📡</button>
             </form>
             <a href="/login" class="switch-link">Have an active access key? <span>Log In</span></a>
-        </div>
     </div>
     {% endif %}
 @app,route('/login',methods=['GET','POST','HEAD'])
-    <!-- 🔐 स्क्रीन 3:(Log In Box) -->
+    <!--:(Log In Box) -->
     {% if segment == 'login' %}
     <div class="auth-wrapper">
-        <div class="auth-container">
+        <div class="auth-container"</div>
             <div class="header">🔐 LOCK SCREEN 🔐</div>
             <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
             <h2 class="auth-heading">ENTER KEY DETAILS</h2>
@@ -147,7 +145,7 @@ HTML_LAYOUT = """
         </div>
     </div>
     {% endif %}
-    <!-- 👑 स्क्रीन 4 -->
+    <!-- -->
     {% if segment == 'dashboard' %}
 @app.route('/dashboard', methods=['GET', 'HEAD'])
 <body>
@@ -204,7 +202,7 @@ HTML_LAYOUT = """
 </body>
 </html>
 """
-@app.route('/',methods=[`GET`, `POST`, `HEAD`])
+@app.route('/',methods=['GET', 'POST', 'HEAD'])
 def home():
     return render_template_string(HTML_layout,page='welcom')
 @app.route('/api/scan-ports', methods=['GET'])
@@ -221,6 +219,8 @@ def neural_compiler():
     return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>Corrupted scripts converted into Original Legal Source Code."})
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
+        
+        
         
             
 
