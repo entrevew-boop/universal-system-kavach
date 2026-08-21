@@ -3,14 +3,15 @@ import sys
 from flask import Flask, render_template_string, jsonify, request, redirect, url_for, session
 
 app = Flask(__name__)
+# 🔐 सुरक्षा की ताली (Session Management के लिए अनिवार्य)
 app.secret_key = 'UNIVERSAL_SYSTEM_KAVACH_SUPER_SECRET_KEY_2026'
 
-# 🗄️ LIVE SERVER DATABASE VAULT (यूजर आईडी और पासवर्ड की सुरक्षित तिजोरी)
+# 🗄️ LIVE SERVER DATABASE VAULT (यूजर आईडी और पासवर्ड स्टोर करने का असली रजिस्टर)
 USER_DATABASE = {
     "admin": "kavach2026"
 }
 
-# 👑 COMPLETE MULTI-SCREEN HTML LAYOUT WITH SIGNUP & LOGIN
+# 👑 HTML_LAYOUT: इसके अंदर परिचय, साइनअप, लॉगिन और आपका पुराना 4 नियॉन बटन्स वाला डैशबोर्ड सब एक साथ फिट है!
 HTML_LAYOUT = """
 <!DOCTYPE html>
 <html lang="en">
@@ -25,24 +26,19 @@ HTML_LAYOUT = """
             --neon-cyan: #00FFCC;
             --neon-green: #33FF33;
             --neon-alert: #FF3333;
-            --border-glow: rgba(0, 255, 204, 0.1);
+            --border-glow: rgba(0, 255, 204, 0.15);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: var(--bg-color); color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; }
-        .container { width: 100%; max-width: 480px; margin: auto; text-align: center; background-color: var(--panel-bg); border: 1px solid #1a1a24; padding: 35px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0,255,204,0.05); }
-        .dashboard-container { width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; }
         
-        .header { color: var(--neon-cyan); font-size: 24px; font-weight: 800; text-shadow: 0 0 12px rgba(0,255,204,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
-        .owner-tag { color: var(--neon-cyan); font-size: 11px; margin-bottom: 20px; opacity: 0.8; letter-spacing: 2px; }
-        .status-box { background-color: #030303; border: 1px solid var(--neon-green); padding: 12px; margin: 20px auto; width: 100%; max-width: 800px; color: var(--neon-green); border-radius: 6px; font-weight: bold; font-size: 13px; box-shadow: 0 0 10px rgba(51,255,51,0.05); }
-        
+        /* AUTHENTICATION CONTAINERS (लॉगिन-साइनअप का आलीशान बक्सा) */
+        .auth-container { width: 100%; max-width: 480px; margin: auto; text-align: center; background-color: var(--panel-bg); border: 1px solid #1a1a24; padding: 35px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0,255,204,0.05); }
         h2.auth-heading { color: #ffffff; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #1a1a24; padding-bottom: 10px; }
         p.info-text { color: #888890; font-size: 13px; line-height: 1.6; margin-bottom: 25px; text-align: justify; }
         .form-group { margin-bottom: 18px; text-align: left; }
         label { display: block; color: var(--neon-cyan); font-size: 11px; font-weight: bold; margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
         input { width: 100%; background-color: #111116; border: 1px solid #22222b; padding: 13px 12px; color: #ffffff; border-radius: 6px; font-size: 14px; transition: all 0.3s; }
         input:focus { border-color: var(--neon-cyan); outline: none; box-shadow: 0 0 10px rgba(0,255,204,0.1); }
-        
         .submit-btn { width: 100%; background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 13px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; margin-top: 10px; }
         .submit-btn:hover { background-color: #00ccaa; box-shadow: 0 0 15px rgba(0,255,204,0.25); }
         .switch-link { display: block; margin-top: 18px; color: #888890; font-size: 12px; text-decoration: none; }
@@ -50,7 +46,13 @@ HTML_LAYOUT = """
         .error-msg { background-color: rgba(255,51,51,0.08); border: 1px solid var(--neon-alert); color: var(--neon-alert); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
         .success-msg { background-color: rgba(51,255,51,0.08); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
 
+        /* CORE DASHBOARD DOCK (आपका कल रात वाला 4 बटन्स वाला असली ग्रिड) */
+        .dashboard-container { width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .header { color: var(--neon-cyan); font-size: 24px; font-weight: 800; text-shadow: 0 0 12px rgba(0,255,204,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+        .owner-tag { color: var(--neon-cyan); font-size: 11px; margin-bottom: 20px; opacity: 0.8; letter-spacing: 2px; }
+        .status-box { background-color: #030303; border: 1px solid var(--neon-green); padding: 12px; margin: 20px auto; width: 100%; max-width: 800px; color: var(--neon-green); border-radius: 6px; font-weight: bold; font-size: 13px; box-shadow: 0 0 10px rgba(51,255,51,0.05); }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; width: 100%; max-width: 800px; margin: 25px auto; }
+        
         .btn { background-color: #111115; color: #ffffff; padding: 22px 15px; font-size: 14px; font-weight: 700; border: 1px solid #222228; border-radius: 8px; cursor: pointer; transition: all 0.25s ease; text-align: left; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; }
         .btn-ports { border-left: 4px solid #C62828; }
         .btn-network { border-left: 4px solid #1565C0; }
@@ -63,10 +65,11 @@ HTML_LAYOUT = """
         .logout-btn { background-color: transparent; border: 1px solid var(--neon-alert); color: var(--neon-alert); font-weight: bold; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; margin-top: 25px; transition: all 0.3s; }
         .logout-btn:hover { background-color: var(--neon-alert); color: #ffffff; }
 
+        /* LIVE MODAL FLOATER PANELS */
         .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #050508; border: 2px solid var(--neon-cyan); box-shadow: 0 0 35px rgba(0,255,204,0.3); padding: 25px; border-radius: 12px; width: 92%; max-width: 465px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
         .custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
         .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .alert-content-text { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 20px; }
+        .alert-content-text { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 20px; white-space: pre-line; }
         .custom-alert-btn { background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; backdrop-filter: blur(6px); }
         .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; width: 100%; }
@@ -74,9 +77,9 @@ HTML_LAYOUT = """
 </head>
 <body>
 
-    <!-- SCREEN 1: WELCOME SCREEN -->
+    <!-- 📄 पन्ना 1: स्वागत स्क्रीन (WELCOME GATE) -->
     {% if page == 'welcome' %}
-    <div class="container">
+    <div class="auth-container">
         <div class="header">👑 SYSTEM KAVACH 👑</div>
         <div class="owner-tag">GLOBAL SECURE DASHBOARD</div>
         <h2 class="auth-heading">HACK-LESS PROTECTION ON</h2>
@@ -86,9 +89,9 @@ HTML_LAYOUT = """
     </div>
     {% endif %}
 
-    <!-- SCREEN 2: SIGN UP BOX -->
+    <!-- 🛡️ पन्ना 2: नया खाता बनाएं (SIGN UP SCREEN) -->
     {% if page == 'signup' %}
-    <div class="container">
+    <div class="auth-container">
         <div class="header">🛡️ REGISTER GATE 🛡️</div>
         <div class="owner-tag">IDENTITY VAULT MAKER</div>
         <h2 class="auth-heading">CREATE USER ACCOUNT</h2>
@@ -111,9 +114,9 @@ HTML_LAYOUT = """
     </div>
     {% endif %}
 
-    <!-- SCREEN 3: LOG IN BOX -->
+    <!-- 🔐 पन्ना 3: लॉगिन सुरक्षा ताला (LOG IN SCREEN) -->
     {% if page == 'login' %}
-    <div class="container">
+    <div class="auth-container">
         <div class="header">🔐 LOCK SCREEN 🔐</div>
         <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
         <h2 class="auth-heading">ENTER KEY DETAILS</h2>
@@ -127,14 +130,3 @@ HTML_LAYOUT = """
             </div>
             <div class="form-group">
                 <label>ENTER SECRET PASSWORD</label>
-                <input type="password" name="password" placeholder="Your password..." required>
-            </div>
-            <button type="submit" class="submit-btn">UNLOCK SHIELD INTERFACE 👑</button>
-        </form>
-        <a href="/signup" class="switch-link">Need a new security pass? <span>Sign Up</span></a>
-    </div>
-    {% endif %}
-
-    <!-- SCREEN 4: DASHBOARD -->
-    {% if page == 'dashboard' %}
-    <div class="dashboard-container">
