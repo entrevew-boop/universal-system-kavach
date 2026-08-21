@@ -1,8 +1,11 @@
 import sys
-from flask import Flask, render_template_string, jsonify
-
+from flask import Flask, render_template_string, jsonify, request, redirect, url_for, session
 app = Flask(__name__)
-
+# 🗄️ LIVE SERVER DATABASE REGISTER (यूजर डेटा स्टोर करने की सुरक्षित तिजोरी)
+app.secret_key = 'UNIVERSAL_SYSTEM_KAVACH_SUPER_SECRET_KEY_2026'
+USER_DATABASE = {
+    "admin": "kavach2026"  # यह आपका डिफ़ॉल्ट VIP एडमिन खाता है
+}
 # 👑 YOUR PERFECT REAL WORKING RESPONSIVE UI GRID
 HTML_LAYOUT = """
 <!DOCTYPE html>
@@ -25,7 +28,6 @@ HTML_LAYOUT = """
         .header { margin-top: 20px; color: var(--neon-cyan); font-size: 24px; font-weight: 800; text-shadow: 0 0 12px rgba(0,255,204,0.4); letter-spacing: 1px; text-transform: uppercase; }
         .owner-tag { color: var(--neon-cyan); font-size: 11px; margin-top: 5px; opacity: 0.8; letter-spacing: 2px; }
         .status-box { background-color: var(--panel-bg); border: 1px solid var(--neon-green); padding: 12px; margin: 20px auto; width: 100%; max-width: 800px; color: var(--neon-green); border-radius: 6px; font-weight: bold; font-size: 13px; box-shadow: 0 0 10px rgba(51,255,51,0.05); }
-        
         .grid-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -65,7 +67,6 @@ HTML_LAYOUT = """
         .btn-title { font-size: 15px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: bold; }
         .btn-desc { font-size: 11px; font-weight: 400; color: #888890; }
         .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; }
-        
         .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #0b0b0f; border: 2px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,255,204,0.2); padding: 20px; border-radius: 12px; width: 90%; max-width: 450px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
         .custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
         .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 12px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; }
@@ -79,7 +80,6 @@ HTML_LAYOUT = """
         <div class="header">👑 Universal System Kavach 👑</div>
         <div class="owner-tag">[© 2026 REGISTERED OWNER: YOU]</div>
         <div class="status-box">🔒 Privacy Status: '100-Layer Strict Shield' is Active. System Secure (Hak Less).</div>
-        
         <div class="grid-container">
             <button class="btn btn-ports" onclick="triggerSoftware('/api/scan-ports')">
                 <span class="btn-title">🧹 2-Ports Scanner</span>
@@ -106,10 +106,10 @@ HTML_LAYOUT = """
         <button class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD ❌</button>
     </div>
     <div class="footer">Designed Globally for Humanity as a Sovereign Cloud Application under Proprietary Copyright License © 2026</div>
-
     <script>
         const alertBox = document.getElementById('customAlert');
-        
+        const overlayBox = document.getElementById('overlay');
+        async function triggerSoftware(endpoint) {
             try {
                 const response = await fetch(endpoint);
                 const data = await response.json();
@@ -129,30 +129,111 @@ HTML_LAYOUT = """
 </body>
 </html>
 """
-@app.route('/')
-def home():
-    return render_template_string(HTML_LAYOUT)
+# ==================== 🔐 USER SIGNUP & LOGIN ROUTE ENGINE ====================
+
+@app.route('/', methods=['GET', 'POST', 'HEAD'])
+def welcome():
+    if request.method == 'HEAD': 
+        return '', 200
+    if 'username' in session: 
+        return redirect(url_for('home'))
+    return render_template_string(HTML_LAYOUT, page='welcome')
+
+@app.route('/signup', methods=['GET', 'POST', 'HEAD'])
+def signup():
+    if request.method == 'HEAD': 
+        return '', 200
+    if 'username' in session: 
+        return redirect(url_for('dashboard'))
+        
+    error = None
+    success = None
+    
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip().lower()
+        password = request.form.get('password', '')
+        
+        if not username or not password:
+            error = "User ID and Password cannot be empty!"
+        elif username in USER_DATABASE:
+            error = "This User ID already exists! Try another name."
+        else:
+            USER_DATABASE[username] = password
+            success = "ACCOUNT ACTIVATED! Click 'Log In' below to enter core."
+            
+    return render_template_string(HTML_LAYOUT, page='signup', error=error, success=success)
+
+@app.route('/login', methods=['GET', 'POST', 'HEAD'])
+def login():
+    if request.method == 'HEAD': 
+        return '', 200
+    if 'username' in session: 
+        return redirect(url_for('dashboard'))
+        
+    error = None
+    
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip().lower()
+        password = request.form.get('password', '')
+        
+        if username in USER_DATABASE and USER_DATABASE[username] == password:
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            error = "INVALID IDENTITY ACCESS KEY! Access Denied."
+            
+    return render_template_string(HTML_LAYOUT, page='login', error=error)
+
+@app.route('/dashboard', methods=['GET', 'HEAD'])
+def dashboard():
+    if request.method == 'HEAD': 
+        return '', 200
+    if 'username' not in session: 
+        return redirect(url_for('login'))
+    return render_template_string(HTML_LAYOUT, page='dashboard')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('welcome'))
+
+# 🧹 API CONNECTIONS (पुराने बटन्स के सुरक्षित अंदरूनी रास्ते)
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
+    if 'username' not in session: return jsonify({"status": "ERROR", "message": "Denied"})
     return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
+
 @app.route('/api/network-hunting', methods=['GET'])
 def network_hunting():
+    if 'username' not in session: return jsonify({"status": "ERROR", "message": "Denied"})
     return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!<br><br>🔗 Connected Source: Asman Satellite (Starlink Grid)"})
+
 @app.route('/api/time-lock', methods=['GET'])
 def time_lock():
+    if 'username' not in session: return jsonify({"status": "ERROR", "message": "Denied"})
     return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.<br><br>Brute-force decryption tools destroyed instantly."})
+
 @app.route('/api/neural-compiler', methods=['GET'])
 def neural_compiler():
+    if 'username' not in session: return jsonify({"status": "ERROR", "message": "Denied"})
     return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>Corrupted scripts converted into Original Legal Source Code."})
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
-        async function triggerSoftware(endpoint) {
-        const overlayBox = document.getElementById('overlay');
+    # 🎯 PORT IS 5000 AS SET BY RENDER INITIALIZER ENGINE
+    app.run(host='0.0.0.0', port=5000)
 
 
 
 
+        
 
+
+        
+        
+
+        
 
                 
+
+
 
