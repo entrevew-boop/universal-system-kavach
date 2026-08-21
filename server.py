@@ -72,7 +72,7 @@ HTML_LAYOUT = """
         .custom-alert p { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 18px; white-space: pre-line; }
         .custom-alert-btn { background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(4px); }
-          /* 🔐 साइनअप और लॉगिन बक्से का वीआईपी डिज़्‍ाइन (बिना कुछ मिटाए नीचे जोड़ें) */
+       
         .auth-wrapper { display: flex; width: 100%; min-height: 80vh; align-items: center; justify-content: center; }
         .auth-container { width: 100%; max-width: 480px; text-align: center; background-color: var(--panel-bg); border: 1px solid #1a1a24; padding: 35px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0,255,204,0.05); }
         h2.auth-heading { color: #ffffff; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #1a1a24; padding-bottom: 10px; }
@@ -90,7 +90,7 @@ HTML_LAYOUT = """
  
      </style>
 </head>
-    <!-- 📄 स्क्रीन 1: सॉफ़्टवेयर का स्वागत पन्ना (Welcome Screen) -->
+    <!-- 📄 स्क्रीन 1:ा (Welcome Screen) -->
     {% if segment == 'welcome' %}
     <div class="auth-wrapper">
         <div class="auth-container">
@@ -104,7 +104,7 @@ HTML_LAYOUT = """
     </div>
     {% endif %}
 
-    <!-- 🛡️ स्क्रीन 2: नया अकाउंट बनाने का गेट (Sign Up Box) -->
+    <!-- 🛡️ स्क्रीन 2:(Sign Up Box) -->
     {% if segment == 'signup' %}
     <div class="auth-wrapper">
         <div class="auth-container">
@@ -131,7 +131,7 @@ HTML_LAYOUT = """
     </div>
     {% endif %}
 
-    <!-- 🔐 स्क्रीन 3: लॉगिन करने का ताला (Log In Box) -->
+    <!-- 🔐 स्क्रीन 3:(Log In Box) -->
     {% if segment == 'login' %}
     <div class="auth-wrapper">
         <div class="auth-container">
@@ -157,7 +157,7 @@ HTML_LAYOUT = """
     </div>
     {% endif %}
 
-    <!-- 👑 स्क्रीन 4: इसके नीचे आपका पुराना कड़क नियॉन बटन्स वाला बक्सा बिल्कुल सुरक्षित रहेगा -->
+    <!-- 👑 स्क्रीन 4 -->
     {% if segment == 'dashboard' %}
 
 <body>
