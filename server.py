@@ -222,7 +222,8 @@ HTML_LAYOUT = """
 
 @app.route('/')
 def home():
-    return render_template_string(html_layout,page='welcome')
+    return render_template_string(HTML
+                                   _layout,page='welcome')
 
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
