@@ -3,8 +3,8 @@ from flask import Flask, render_template_string, jsonify
 app = Flask(__name__)
 # 👑 YOUR PERFECT REAL WORKING RESPONSIVE UI GRID
 HTML_LAYOUT = """
-<!DOCTYPE HTML>
-<HTML lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -84,8 +84,8 @@ HTML_LAYOUT = """
         .success-msg { background-color: rgba(51,255,51,0.08); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
      </style>
 </head>
-     (Welcome Screen) -->
-    {% if segment == 'welcome' %}
+     <!--SCREEN 1: WELCOME SCREEN -->
+    {% if page == 'welcome' %}
     <div class="auth-wrapper">
         <div class="auth-container">
             <div class="header">👑 SYSTEM KAVACH 👑</div>
@@ -99,7 +99,7 @@ HTML_LAYOUT = """
     {% endif %}
 @app.rout('/signup',methods=['GET','POST', 'HEAD'])
     <!-:(Sign Up Box) -->
-    {% if segment == 'signup' %}
+    {% if page == 'signup' %}
     <div class="auth-wrapper">
         <div class="auth-container">
             <div class="header">🛡️ REGISTER GATE 🛡️</div>
