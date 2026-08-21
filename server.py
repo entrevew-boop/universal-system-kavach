@@ -204,7 +204,7 @@ HTML_LAYOUT = """
 """
 @app.route('/',methods=['GET', 'POST', 'HEAD'])
 def home():
-    return render_template_string(HTML_layout,page='welcom')
+    return render_template_string(HTML_LAYOUT,page='welcome')
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
     return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
