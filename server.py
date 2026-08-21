@@ -1,8 +1,6 @@
 import sys
 from flask import Flask, render_template_string, jsonify
-
 app = Flask(__name__)
-
 # 👑 YOUR PERFECT REAL WORKING RESPONSIVE UI GRID
 HTML_LAYOUT = """
 <!DOCTYPE html>
@@ -65,14 +63,12 @@ HTML_LAYOUT = """
         .btn-title { font-size: 15px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: bold; }
         .btn-desc { font-size: 11px; font-weight: 400; color: #888890; }
         .footer { font-size: 10px; color: #44444a; padding: 20px 0; letter-spacing: 0.5px; text-align: center; }
-        
         .custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: #0b0b0f; border: 2px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,255,204,0.2); padding: 20px; border-radius: 12px; width: 90%; max-width: 450px; z-index: 10000; text-align: left; transition: all 0.3s ease; }
         .custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
         .custom-alert h3 { color: var(--neon-cyan); margin-bottom: 12px; font-size: 18px; border-bottom: 1px solid #1a1a24; padding-bottom: 8px; }
         .custom-alert p { color: #e4e4e9; font-size: 13px; line-height: 1.6; margin-bottom: 18px; white-space: pre-line; }
         .custom-alert-btn { background-color: var(--neon-cyan); color: #000000; font-weight: 800; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; float: right; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(4px); }
-       
         .auth-wrapper { display: flex; width: 100%; min-height: 80vh; align-items: center; justify-content: center; }
         .auth-container { width: 100%; max-width: 480px; text-align: center; background-color: var(--panel-bg); border: 1px solid #1a1a24; padding: 35px 25px; border-radius: 12px; box-shadow: 0 0 25px rgba(0,255,204,0.05); }
         h2.auth-heading { color: #ffffff; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #1a1a24; padding-bottom: 10px; }
@@ -87,7 +83,6 @@ HTML_LAYOUT = """
         .switch-link span { color: var(--neon-cyan); font-weight: bold; }
         .error-msg { background-color: rgba(255,51,51,0.08); border: 1px solid var(--neon-alert); color: var(--neon-alert); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
         .success-msg { background-color: rgba(51,255,51,0.08); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px; border-radius: 6px; font-size: 12px; margin-bottom: 15px; font-weight: bold; text-align: center; }
- 
      </style>
 </head>
     <!-- 📄 स्क्रीन 1:ा (Welcome Screen) -->
@@ -111,10 +106,8 @@ HTML_LAYOUT = """
             <div class="header">🛡️ REGISTER GATE 🛡️</div>
             <div class="owner-tag">IDENTITY VAULT MAKER</div>
             <h2 class="auth-heading">CREATE USER ACCOUNT</h2>
-            
             {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
             {% if success %}<div class="success-msg">{{ success }}</div>{% endif %}
-            
             <form action="/signup" method="POST">
                 <div class="form-group">
                     <label>CREATE USER ID / USERNAME</label>
@@ -138,9 +131,7 @@ HTML_LAYOUT = """
             <div class="header">🔐 LOCK SCREEN 🔐</div>
             <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
             <h2 class="auth-heading">ENTER KEY DETAILS</h2>
-            
             {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
-            
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label>ENTER USER ID</label>
@@ -156,7 +147,6 @@ HTML_LAYOUT = """
         </div>
     </div>
     {% endif %}
-
     <!-- 👑 स्क्रीन 4 -->
     {% if segment == 'dashboard' %}
 @app.route('/dashboard', methods=['GET', 'HEAD'])
@@ -165,7 +155,6 @@ HTML_LAYOUT = """
         <div class="header">👑 Universal System Kavach 👑</div>
         <div class="owner-tag">[© 2026 REGISTERED OWNER: YOU]</div>
         <div class="status-box">🔒 Privacy Status: '100-Layer Strict Shield' is Active. System Secure (Hak Less).</div>
-        
         <div class="grid-container">
             <button class="btn btn-ports" onclick="triggerSoftware('/api/scan-ports')">
                 <span class="btn-title">🧹 2-Ports Scanner</span>
@@ -192,16 +181,13 @@ HTML_LAYOUT = """
         <button class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD ❌</button>
     </div>
     <div class="footer">Designed Globally for Humanity as a Sovereign Cloud Application under Proprietary Copyright License © 2026</div>
-
     <script>
         const alertBox = document.getElementById('customAlert');
         const overlayBox = document.getElementById('overlay');
-        
         async function triggerSoftware(endpoint) {
             try {
                 const response = await fetch(endpoint);
                 const data = await response.json();
-                
                 document.getElementById('alertTitle').innerText = data.title;
                 document.getElementById('alertMessage').innerHTML = data.message;
                 overlayBox.style.display = 'block';
@@ -210,7 +196,6 @@ HTML_LAYOUT = """
                 alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
             }
         }
-
         function closeAlert() {
             overlayBox.style.display = 'none';
             alertBox.classList.remove('active');
@@ -219,26 +204,42 @@ HTML_LAYOUT = """
 </body>
 </html>
 """
-
 @app.route('/',methods=[`GET`, `POST`, `HEAD`])
 def home():
     return render_template_string(HTML_layout,page='welcom')
-                                  
 @app.route('/api/scan-ports', methods=['GET'])
 def scan_ports():
     return jsonify({"status": "SUCCESS", "title": "🛡️ 2-PORTS SCANNER", "message": "[Point 1 & 14]: Active Web Channel Protection<br>Hacker pathways wiped clean instantly like a Flash.<br><br>🖥️ Tracked Hacker IP: 72.163.85.54"})
-
 @app.route('/api/network-hunting', methods=['GET'])
 def network_hunting():
     return jsonify({"status": "SUCCESS", "title": "📡 NETWORK RESTORED", "message": "[Point 13, 15]: Cloud Network drop detected!<br><br>🔗 Connected Source: Asman Satellite (Starlink Grid)"})
-
 @app.route('/api/time-lock', methods=['GET'])
 def time_lock():
     return jsonify({"status": "SUCCESS", "title": "⏱️ MILLISECOND TIME-LOCK", "message": "[Layer 2 Architecture]: Web access security token is changing every 1 millisecond.<br><br>Brute-force decryption tools destroyed instantly."})
-
 @app.route('/api/neural-compiler', methods=['GET'])
 def neural_compiler():
     return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>Corrupted scripts converted into Original Legal Source Code."})
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
+        
+            
+
+
+        
+
+                
+
+       
+
+            
+            
+
+
+            
+
+
+                                  
+
+        
+
+ 
