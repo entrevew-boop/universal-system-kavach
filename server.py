@@ -2,8 +2,8 @@ import sys
 from flask import Flask, render_template_string, jsonify, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'UNIVERSAL_SYSTEM_KAVACH_SUPER_SECRET_KEY_2026'
-
+app.secret_key = 'UNIVERSAL_SYSTEM_KAVACH_SUPER_SECRET_KEY_20AA26'
+aaaaaaaaaa.
 # 🗄️ LIVE MEMORY REGISTER (यूजर रजिस्टर डेटाबेस तिजोरी)
 USER_DATABASE = {
     "admin": "kavach2026"
