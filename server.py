@@ -144,12 +144,10 @@ def time_lock():
 def neural_compiler():
     return jsonify({"status": "SUCCESS", "title": "🧠 NEURAL COMPILER", "message": "[Third Page Solution]: Input data scan 100% successful.<br><br>Corrupted scripts converted into Original Legal Source Code."})
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-</style>
-</head>
-<body>
-    <!-- 📄 पन्ना 1: स्वागत स्क्रीन (WELCOME GATE) -->
-    {% if page == 'welcome' %}
+    app.run(host='0.0.0.0', port=10000)
+
+  
+    {% if page == 'welcome' %}  
     <div class="auth-container">
         <div class="header">👑 SYSTEM KAVACH 👑</div>
         <div class="owner-tag">GLOBAL SECURE DASHBOARD</div>
@@ -159,7 +157,7 @@ if __name__ == '__main__':
         <a href="/login" class="switch-link">Already a registered owner? <span>Log In here</span></a>
     </div>
     {% endif %}
-    <!-- 🛡️ पन्ना 2: नया खाता बनाएं (SIGN UP SCREEN) -->
+    
     {% if page == 'signup' %}
     <div class="auth-container">
         <div class="header">🛡️ REGISTER GATE 🛡️</div>
@@ -181,7 +179,7 @@ if __name__ == '__main__':
         <a href="/login" class="switch-link">Have an active access key? <span>Log In</span></a>
     </div>
     {% endif %}
-    <!-- 🔐 पन्ना 3: लॉगिन सुरक्षा ताला (LOG IN SCREEN) -->
+   
     {% if page == 'login' %}
     <div class="auth-container">
         <div class="header">🔐 LOCK SCREEN 🔐</div>
@@ -195,7 +193,7 @@ if __name__ == '__main__':
             </div>
             <div class="form-group">
                 <label>ENTER SECRET PASSWORD</label>
-
+{% endif %}
 
 
 
