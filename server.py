@@ -156,9 +156,9 @@ if __name__ == '__main__':
         <button class="submit-btn" onclick="window.location.href='/signup'">PROCEED TO SIGN UP 🔒</button>
         <a href="/login" class="switch-link">Already a registered owner? <span>Log In here</span></a>
     </div>
-    {% endif %}
+
     
-    {% if page == 'signup' %}
+ 
     <div class="auth-container">
         <div class="header">🛡️ REGISTER GATE 🛡️</div>
         <div class="owner-tag">IDENTITY VAULT MAKER</div>
@@ -178,9 +178,8 @@ if __name__ == '__main__':
         </form>
         <a href="/login" class="switch-link">Have an active access key? <span>Log In</span></a>
     </div>
-    {% endif %}
    
-    {% if page == 'login' %}
+  
     <div class="auth-container">
         <div class="header">🔐 LOCK SCREEN 🔐</div>
         <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
