@@ -1,7 +1,7 @@
 import sys
 from flask import Flask, render_template_string, jsonify
 app = Flask(__name__)
-# 👑 YOUR PERFECT REAL WORKING RESPONSIVE UI GRID
+#  YOUR PERFECT REAL WORKING RESPONSIVE UI GRID
 HTML_LAYOUT = """
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +74,7 @@ HTML_LAYOUT = """
     <div class="container">
         <div class="header"> Universal System Kavachead</div>
         <div class="owner-tag">[© 2026 REGISTERED OWNER: YOU]</div>
-        <div class="status-box">🔒 Privacy Status: '100-Layer Strict Shield' is Active. System Secure (Hak Less).</div>
+        <div class="status-box"> Privacy Status: '100-Layer Strict Shield' is Active. System Secure (Hak Less).</div>
         
         <div class="grid-container">
             <button class="btn btn-ports" onclick="triggerSoftware('/api/scan-ports')">
@@ -99,7 +99,7 @@ HTML_LAYOUT = """
     <div id="customAlert" class="custom-alert">
         <h3 id="alertTitle">Alert</h3>
         <p id="alertMessage">Message</p>
-        <button class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD ❌</button>
+        <button class="custom-alert-btn" onclick="closeAlert()">CLOSE SHIELD </button>
     </div>
     <div class="footer">Designed Globally for Humanity as a Sovereign Cloud Application under Proprietary Copyright License © 2026</div>
     <script>
@@ -116,7 +116,7 @@ HTML_LAYOUT = """
                 overlayBox.style.display = 'block';
                 alertBox.classList.add('active');
             } catch (error) {
-                alert("⚠️ Connection Break! Re-linking Universal Satellite Grid...");
+                alert(" Connection Break! Re-linking Universal Satellite Grid...");
             }
         }
 
@@ -153,9 +153,9 @@ if __name__ == '__main__':
         <div class="owner-tag">GLOBAL SECURE DASHBOARD</div>
         <h2 class="auth-heading">HACK-LESS PROTECTION ON</h2>
         <p class="info-text">Welcome to the world's most powerful decentralized cloud protection hub. This network shields transmission gates dynamically. To interact with the system buttons, you must first register your Unique User ID below.</p>
-        <button class="submit-btn" onclick="window.location.href='/signup'">PROCEED TO SIGN UP 🔒</button>
+        <button class="submit-btn" onclick="window.location.href='/signup'">PROCEED TO SIGN UP </button>
         <a href="/login" class="switch-link">Already a registered owner? <span>Log In here</span></a>
-    </div>
+    
 
     
  
@@ -181,7 +181,7 @@ if __name__ == '__main__':
    
   
     <div class="auth-container">
-        <div class="header">🔐 LOCK SCREEN 🔐</div>
+        <div class="header"> LOCK SCREEN </div>
         <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
         <h2 class="auth-heading">ENTER KEY DETAILS</h2>
         {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
