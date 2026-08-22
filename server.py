@@ -72,7 +72,7 @@ HTML_LAYOUT = """
 </head>
 <body>
     <div class="container">
-        <div class="header">👑 Universal System Kavach 👑</div>
+        <div class="header"> Universal System Kavachead</div>
         <div class="owner-tag">[© 2026 REGISTERED OWNER: YOU]</div>
         <div class="status-box">🔒 Privacy Status: '100-Layer Strict Shield' is Active. System Secure (Hak Less).</div>
         
@@ -149,7 +149,7 @@ if __name__ == '__main__':
   
     {% if page == 'welcome' %}  
     <div class="auth-container">
-        <div class="header">👑 SYSTEM KAVACH 👑</div>
+        <div class="header">SYSTEM KAVACH </div>
         <div class="owner-tag">GLOBAL SECURE DASHBOARD</div>
         <h2 class="auth-heading">HACK-LESS PROTECTION ON</h2>
         <p class="info-text">Welcome to the world's most powerful decentralized cloud protection hub. This network shields transmission gates dynamically. To interact with the system buttons, you must first register your Unique User ID below.</p>
