@@ -5,19 +5,19 @@ from flask import Flask, render_template_string, jsonify, request, redirect, url
 app = Flask(__name__)
 app.secret_key = 'UNIVERSAL_SYSTEM_KAVACH_SUPER_SECRET_KEY_2026'
 
-# 🗄️ LIVE SERVER DATABASE REGISTER (यूजर आईडी और पासवर्ड की सुरक्षित तिजोरी)
+# LIVE SERVER DATABASE REGISTER
 USER_DATABASE = {
     "admin": "kavach2026"
 }
 
-# 👑 COMPLETE MULTI-SCREEN HTML LAYOUT WITH SIGNUP & LOGIN
+# COMPLETE MULTI-SCREEN HTML LAYOUT WITH SIGNUP & LOGIN
 HTML_LAYOUT = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UNIVERSAL SYSTEM KAVACH — Global Security Gate</title>
+    <title>UNIVERSAL SYSTEM KAVACH - Global Security Gate</title>
     <style>
         :root {
             --bg-color: #030303;
@@ -77,11 +77,11 @@ HTML_LAYOUT = """
     <!-- SCREEN 1: WELCOME SCREEN -->
     {% if page == 'welcome' %}
     <div class="container">
-        <div class="header">👑 SYSTEM KAVACH 👑</div>
+        <div class="header">SYSTEM KAVACH</div>
         <div class="owner-tag">GLOBAL SECURE DASHBOARD</div>
         <h2 class="auth-heading">HACK-LESS PROTECTION ON</h2>
         <p class="info-text">Welcome to the world's most powerful decentralized cloud protection hub. This network shields transmission gates dynamically. To interact with the system buttons, you must first register your Unique User ID below.</p>
-        <button class="submit-btn" onclick="window.location.href='/signup'">PROCEED TO SIGN UP 🔒</button>
+        <button class="submit-btn" onclick="window.location.href='/signup'">PROCEED TO SIGN UP</button>
         <a href="/login" class="switch-link">Already a registered owner? <span>Log In here</span></a>
     </div>
     {% endif %}
@@ -89,7 +89,7 @@ HTML_LAYOUT = """
     <!-- SCREEN 2: SIGN UP BOX -->
     {% if page == 'signup' %}
     <div class="container">
-        <div class="header">🛡️ REGISTER GATE 🛡️</div>
+        <div class="header">REGISTER GATE</div>
         <div class="owner-tag">IDENTITY VAULT MAKER</div>
         <h2 class="auth-heading">CREATE USER ACCOUNT</h2>
         
@@ -105,7 +105,7 @@ HTML_LAYOUT = """
                 <label>CREATE SECURITY PASSWORD</label>
                 <input type="password" name="password" placeholder="At least 4 keys..." required>
             </div>
-            <button type="submit" class="submit-btn">ACTIVATE USER GRID 📡</button>
+            <button type="submit" class="submit-btn">ACTIVATE USER GRID</button>
         </form>
         <a href="/login" class="switch-link">Have an active access key? <span>Log In</span></a>
     </div>
@@ -114,7 +114,7 @@ HTML_LAYOUT = """
     <!-- SCREEN 3: LOG IN BOX -->
     {% if page == 'login' %}
     <div class="container">
-        <div class="header">🔐 LOCK SCREEN 🔐</div>
+        <div class="header">LOCK SCREEN</div>
         <div class="owner-tag">ANTI-HACK IDENTITY CHECK</div>
         <h2 class="auth-heading">ENTER KEY DETAILS</h2>
         
@@ -129,7 +129,7 @@ HTML_LAYOUT = """
                 <label>ENTER SECRET PASSWORD</label>
                 <input type="password" name="password" placeholder="Your password..." required>
             </div>
-            <button type="submit" class="submit-btn">UNLOCK SHIELD INTERFACE 👑</button>
+            <button type="submit" class="submit-btn">UNLOCK SHIELD INTERFACE</button>
         </form>
         <a href="/signup" class="switch-link">Need a new security pass? <span>Sign Up</span></a>
     </div>
@@ -138,3 +138,4 @@ HTML_LAYOUT = """
     <!-- SCREEN 4: DASHBOARD -->
     {% if page == 'dashboard' %}
     <div class="dashboard-container">
+        <div class="header">Universal System Kavach</div>
