@@ -134,5 +134,9 @@ HTML_LAYOUT = """
         <a href="/signup" class="switch-link">Need a new security pass? <span>Sign Up</span></a>
     </div>
     {% endif %}
+ <!-- SCREEN 4: DASHBOARD -->
+    {% if page == 'dashboard' %}
+    <div class="dashboard-container">
+        <div class="header">Universal System Kavach</div>
+Use code with caution.
 HTML_LAYOUT = """
-
